@@ -90,7 +90,7 @@ export const properties = [
     city: "Seattle",
     price: "9900",
     type: "studio_apartment",
-    moveIn: "5/11/2022",
+    moveIn: "01/01/2023",
     details: {
       rooms: "3",
       bathrooms: "2",
