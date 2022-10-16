@@ -7,6 +7,7 @@ import { properties } from "./utils/data";
 
 function App() {
   const [propertiesData, setPropertiesData] = useState([]);
+  const [error, setError] = useState(false);
   useEffect(() => {
     setPropertiesData(properties);
   }, []);
@@ -44,15 +45,20 @@ function App() {
             properties={propertiesData}
             setProperties={setPropertiesData}
             persistData={properties}
+            setError={setError}
           />
         </div>
-        <div className="listing">
-          {propertiesData.map((e, idx) => (
-            <div key={idx}>
-              <PropertyCard data={e} />
-            </div>
-          ))}
-        </div>
+        {error ? (
+          <h6 className="error-msg">No properties found!</h6>
+        ) : (
+          <div className="listing">
+            {propertiesData.map((e, idx) => (
+              <div key={idx}>
+                <PropertyCard data={e} />
+              </div>
+            ))}
+          </div>
+        )}
       </Container>
     </div>
   );

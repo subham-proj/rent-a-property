@@ -29,7 +29,7 @@ export default function Filter(props) {
   const [filterData, setFilterData] = useState(initialState);
 
   const applyFilters = () => {
-    const temp = props.properties.filter((e, idx) => {
+    const temp = props.persistData.filter((e) => {
       if (filterData.location === "" && filterData.type === "") {
         if (
           Number(e.price) >= filterData.startPrice &&
@@ -73,11 +73,17 @@ export default function Filter(props) {
       }
     });
 
-    props.setProperties(temp);
+    if (temp.length === 0) {
+      props.setError(true);
+    } else {
+      props.setError(false);
+      props.setProperties(temp);
+    }
   };
 
   const clearFilter = () => {
     setFilterData(initialState);
+    props.setError(false);
     props.setProperties(props.persistData);
   };
   return (
@@ -93,7 +99,7 @@ export default function Filter(props) {
                   setFilterData({ ...filterData, location: e.target.value })
                 }
               >
-                <option>Select Location</option>
+                <option value="">Select Location</option>
                 {cities.map((e, idx) => (
                   <option value={e} key={idx}>
                     {e}
@@ -153,7 +159,7 @@ export default function Filter(props) {
                   setFilterData({ ...filterData, type: e.target.value })
                 }
               >
-                <option>Select property type</option>
+                <option value="">Select property type</option>
                 <option value="house">House</option>
                 <option value="apartment">Apartment</option>
                 <option value="studio_apartment">Studio Apartment</option>
